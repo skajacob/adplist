@@ -97,10 +97,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("Your title"),
         help_text=_("format: required, max-100"),
     )
-
     USERNAME_FIELD = 'email' 
-#this field means that when you try to sign in the username field will be the email 
-#change it to whatever you want django to see as the username when authenticating the user
-    REQUIRED_FIELDS = ['user_type']
+    REQUIRED_FIELDS = ['user_type', 'username']
 
     objects = MyUserManager()
