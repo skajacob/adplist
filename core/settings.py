@@ -10,9 +10,9 @@ env = environ.Env()
 environ.Env.read_env()
 
 
-SECRET_KEY='django-insecure-rbzizsgz3omhbl&j+$_fa8psh^u7u%jrx8p--1t4niv%&nc+'
-DEBUG=True
-ALLOWED_HOSTS=['adplis.herokuapp.com']
+SECRET_KEY=env('SECRET_KEY')
+DEBUG=env('DEBUG')
+ALLOWED_HOSTS=env('ALLOWED_HOSTS')
 
 
 
