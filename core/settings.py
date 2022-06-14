@@ -4,15 +4,15 @@ import django_heroku
 import environ
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 environ.Env.read_env()
 
 
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = True
-ALLOWED_HOSTS = ['adplis.herokuapp.com']
+SECRET_KEY='django-insecure-rbzizsgz3omhbl&j+$_fa8psh^u7u%jrx8p--1t4niv%&nc+'
+DEBUG=True
+ALLOWED_HOSTS=['adplis.herokuapp.com']
 
 
 
