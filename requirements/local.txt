@@ -1,5 +1,8 @@
 whitenoise==6.0.0  # https://github.com/evansd/whitenoise
 
 # Django
+django-allauth==0.51.0
+django-rest-auth==0.9.5
+djangorestframework==3.13.1
 Django==3.2.12  # https://www.djangoproject.com/
 django-environ==0.8.1  # https://github.com/joke2k/django-environ
