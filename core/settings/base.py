@@ -1,7 +1,7 @@
 """Django settings for Rotten Tomatoes project."""
 
 from pathlib import Path
-
+import os
 import environ
 
 env = environ.Env()
@@ -138,8 +138,8 @@ REST_FRAMEWORK = {
 }
 
 #Static files(css, javascript, images)
-# STATIC_ROOT = str(BASE_DIR / "staticfiles")
-# STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
 # ]

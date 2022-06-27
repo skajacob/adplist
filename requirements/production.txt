@@ -1,5 +1,4 @@
 # PRECAUTION: avoid production dependencies that aren't in development
-
 -r base.txt
 django-allauth==0.51.0
 django-rest-auth==0.9.5
