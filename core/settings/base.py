@@ -74,11 +74,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': env.db(
         'DATABASE_URL',
-        default = 'sqlite:////' + str(BASE_DIR / 'db.sqlite3')
+        default='sqlite:////' + str(BASE_DIR / 'db.sqlite3')
     ),
 }
 
-DATABASES["default"]["ATOMIC_REQUESTS"]=True
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 #secuity
 
@@ -104,15 +104,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-MX'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
+USE_TZ = True
+
 USE_L10N = True
 
-USE_TZ = True
 
 
 
@@ -137,8 +138,8 @@ REST_FRAMEWORK = {
 }
 
 #Static files(css, javascript, images)
-STATIC_URL = "/static/"
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -148,7 +149,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #all auth configuration for custom user auth
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
