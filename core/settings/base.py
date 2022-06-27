@@ -2,22 +2,20 @@
 from pathlib import Path
 import django_heroku
 import environ
-import os
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
 environ.Env.read_env()
 
 
-SECRET_KEY=env('SECRET_KEY')
-DEBUG=env('DEBUG')
+SECRET_KEY=env('DJANGO_SECRET_KEY')
+DEBUG=env.bool('DJANGO_DEBUG',False)
 ALLOWED_HOSTS=env('ALLOWED_HOSTS')
 
 
-
-
-INSTALLED_APPS = [
+DJANGO_APPS=[
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,7 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+]
 
+THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -35,12 +35,17 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+]
 
+LOCAL_APPS = [
     'users',
 ]
 
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,23 +75,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES={
-   'default':{
-      'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'d7cor94uagjff8',
-      'USER':'qwfvfkjmergdkq',
-      'PASSWORD':'73fd3eb4c2735bc5e34bc76e6e464ee4fea2b473b46d73e349766e2a71061a50',
-      'HOST':'ec2-35-168-194-15.compute-1.amazonaws.com',
-      'PORT':'5432',
-   }
+#databases
+DATABASES = {
+    'default': env.db(
+        'DATABASE_URL',
+        default = 'sqlite:////' + str(BASE_DIR / 'db.sqlite3')
+    ),
 }
+
+DATABASES["default"]["ATOMIC_REQUESTS"]=True
+
+#secuity
+
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -115,15 +120,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SITE_ID = 1
-
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-AUTH_USER_MODEL = "users.User"
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -144,6 +141,23 @@ REST_FRAMEWORK = {
     ]
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+#Static files(css, javascript, images)
 STATIC_URL = "/static/"
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+
+
+#all auth configuration for custom user auth
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SITE_ID = 1
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AUTH_USER_MODEL = "users.User"
+
+
 django_heroku.settings(locals())
