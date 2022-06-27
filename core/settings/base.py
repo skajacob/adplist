@@ -1,18 +1,13 @@
-"""Django settings for core project."""
+"""Django settings for Rotten Tomatoes project."""
+
 from pathlib import Path
-import django_heroku
+
 import environ
 
 env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
-environ.Env.read_env()
-
-
-SECRET_KEY=env('DJANGO_SECRET_KEY')
-DEBUG=env.bool('DJANGO_DEBUG',False)
-ALLOWED_HOSTS=env('ALLOWED_HOSTS')
+DEBUG = env.bool("DJANGO_DEBUG", False)
 
 
 DJANGO_APPS=[
@@ -148,7 +143,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# Default primary key field type
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #all auth configuration for custom user auth
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -158,6 +155,3 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTH_USER_MODEL = "users.User"
-
-
-django_heroku.settings(locals())
